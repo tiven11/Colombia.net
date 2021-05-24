@@ -59,6 +59,3 @@ $DB = new Database();
 
 
 
-//prueba de actualizacion en github
-
-// segunda prueba de actualizar 

@@ -1,22 +1,37 @@
 <?php
-
+    
     include("classes/connect.php");
     include("classes/signup.php");
-
-    if ($_SERVER['REQUEST_METHOD']=='POST')
+    
+    $first_name = "";
+    $last_name = "";
+    $gender = "";
+    $email = "";
+    
+    if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         $signup = new Signup();
-        $result=$signup->evaluate($POST);
+        $result = $signup->evaluate($_POST);
         
-        echo $result;
+        if($result != "")
+        {
 
+         echo "<div style='text-align:center; font-size:12px; color:white; background-color:grey'>";   
+         echo "<br>the following errors occured:<br><br>";   
+         echo $result;
+         echo "</div>";
         
-        //echo "<pre>";
-        //print_r($_POST); 
-        //echo "</pre>";
+        }       
+        
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $gender = $_POST['gender'];
+        $email = $_POST['email'];
+        
     }
    
 
+    
 ?>
 
 <html>
@@ -102,23 +117,25 @@ float: right;
 
         <form method="post" action="">
 
-            <input name="first_name" type="text" id="text" placeholder="First Name"><br><br>
-            <input name="last_name" type="text" id="text" placeholder="Last Name"><br><br>
+            <input value="<?php echo $first_name ?>" name="first_name" type="text" id="text" placeholder="First Name"><br><br>
+            <input value="<?php echo $last_name ?>" name="last_name" type="text" id="text" placeholder="Last Name"><br><br>
             
             <span style="font-weight: bolder;">Gender:</span> <br>
         
             <Select name="gender" id="text">
             
+            <option><?php echo $gender ?></option>
             <option>Male</option>
             <option>Female</option>
             
             </Select> <br> <br>
 
-            <input name="email" type="text" id="text" placeholder="Email"><br><br>
-            <input name="password1" type="Password" id="text" placeholder="Password"><br><br>
-            <input name="password2" type="Password" id="text" placeholder=" Retry Password"><br><br>
+            <input value="<?php echo $email ?>" name="email" type="text" id="text" placeholder="Email"><br><br>
+            <input name="password" type="password" id="text" placeholder="Password"><br><br>
+            <input name="password2" type="password" id="text" placeholder=" Retry Password"><br><br>
 
             <input type="submit" id="button" value="Sign Up">
+            <br><br><br>
 
         </form>
 

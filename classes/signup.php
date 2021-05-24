@@ -12,17 +12,38 @@ class Signup
             # code...
             if(empty($value))
             {
-                $error =   $key . "is empty!<br>";
+                $this->error = $this->error . $key . "is empty!<br>";
             }
+            if($key == "email")
+            {   
+                if (!preg_match("/([\w\-]+\@[\w\-]+\.[\w\-]+)/",$value))
+                {
+                $this->error = $this->error . "invalid email address!<br>";
+                }    
+            }
+            if($key == "first_name")
+            {   
+                if (is_numeric($value))
+                {
+                $this->error = $this->error . "first name cant be a number!<br>";
+                }    
+            } 
+            if($key == "last_name")
+            {   
+                if (is_numeric($value))
+                {
+                $this->error = $this->error . "last name cant be a number!<br>";
+                }    
+            }  
         }
 
-        if($error == "")
+        if($this->error == "")
         {
             //no error
             $this->create_user($data);
         }else
         {
-            return $error;
+            return $this->error;
         }
 
     }
@@ -36,8 +57,8 @@ class Signup
         $password = $data['password'];
 
         // create these
-        $url_address = strtolower($first_name) . strtolower($last_name);
-        $userid = create_userid(); 
+        $url_address = strtolower($first_name) .".". strtolower($last_name);
+        $userid = $this->create_userid(); 
 
 
         $query = "insert into users
@@ -45,11 +66,11 @@ class Signup
         values
         ('$userid','$first_name','$last_name','$gender','$email','$password','$url_address')";
 
-        return $query;
+        
 
 
-        //$DB = new Database();
-        //$DB->save($query);
+        $DB = new Database();
+        $DB->save($query);
     }
 
     
